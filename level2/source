@@ -1,0 +1,16 @@
+void p () {
+	char buf[76];
+	void *ebp = buf + 76;
+
+	fflush(stdout);
+	gets(buf);
+	if ((ebp + 4 & 0xb0000000) == 0xb0000000)
+	{
+
+	}
+}
+
+
+int main() {
+	p();
+}

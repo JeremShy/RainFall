@@ -1,0 +1,15 @@
+int main(int ac, char **av) {
+	if (atoi(argv[1]) != 423) {
+		fwrite("No !\n", 5, 1, stderr);
+	}
+		else
+	{
+		char *a = strdup("/bin/sh");
+		int b = getegid();
+		int c = geteuid();
+		setresgid(b, b, b);
+		setresuid(c, c, c);
+		execve(a);
+	}
+	return (0);
+}

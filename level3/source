@@ -1,0 +1,15 @@
+void v() {
+	int check;
+	char buf[512];
+
+	fgets(buf, 512, stdin);
+	if (check == 64) {
+		fwrite("Wait what?!\n", 1, 12, stdout);
+		system("/bin/sh");
+	}
+}
+
+
+int main() {
+	v();
+}

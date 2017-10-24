@@ -1,0 +1,15 @@
+On est encore devant un format string bug.
+
+On ne peut pas ecraser le eip du retour de n car il y a un exit. On va donc ecraser celui du retour de printf.
+
+Pour cela on fait comme dans l'exercice précedent pour ecraser le eip du retour de printf.
+
+On ecrit l'adresse de notre shellcode stoque dans l'environnement a l'eip de printf (voir exercice precedent).
+
+
+python -c "print '\xde''\xd4''\xff''\xbf' + 'aaaa' + '\xdc''\xd4''\xff''\xbf' + '%08x.' * 2 + '%049121x' + '%hn' + '%012360x' + '%hn'""
+
+Par contre il nous faut trouver l'adresse du eip du printf qui va varier entre l'execution sur gdb et celle réelle.
+Pour ce faire on wrap le programme dans un script shell qui va clean l'environnement : wtf.sh.
+
+Et voila.
