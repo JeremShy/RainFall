@@ -1,0 +1,13 @@
+On voit que le programme va lire l'entree et que si elle commence par "auth ", va ecrire dans un pointeur
+
+Plus tard, on voit que si cette adresse + 32 contient autre chose qu'un '\0', le programme spawn un shell.
+On peut donc set flag en tapant :
+flag pouet
+
+Il existe une autre commande "service" qui va pouvoir nous permettre
+puis on se sert de service pour mettre des caracteres dans service :
+service aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+
+
+du coup le mecanisme de check va aller à auth + 32, ce qui correspond a une adresse dans le service, et va lancer le shell

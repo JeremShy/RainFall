@@ -1,0 +1,12 @@
+On voit un appel non protégé de memcpy dans la fonction membre N::setAnnotation. On peut s'en servir pour ecraser le pointeur vers la vtable du second objet vers une adresse arbitraire.
+
+On le fait pointer vers une adresse de notre environnement qui contiendra l'adresse d'un shellcode, lui meme contenu dans l;environnement.
+
+On va donc creer une variable d'environnement qui contiendra un shellcode suivi d'une adresse dans le nop sled le précédent.
+Apres ce shellcode on mettra un "jump sled", ce qui est donc une suite de pointeurs vers notre shellcode.
+
+En parametre on n'aura qu'à preciser à notre payload l'adresse d'un de ces pointeurs, adresse trouvée grace à gdb.
+
+On trouve ausis grace à gdb que l'offset entre l'annotation et l'adresse de la vtable du second objet est de 0x68. On peut donc simplement donner cela comme parametre :\
+
+python -c "print 'a' * 108 + '\c5''\xff''\xff''\xbf'"
