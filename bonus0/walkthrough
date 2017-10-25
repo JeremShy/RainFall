@@ -1,0 +1,39 @@
+On va utiliser une  spécifité de strncpy pour exploiter cet exercice.
+En effet, strncpy, rappelons le, a le prototype suivant :
+
+char * strncpy(char * dst, const char * src, size_t len);.
+
+Si la longueur de src est supérieure à len, alors len caracteres de src vont etre copies dans dst, sans '\0'.
+
+Appelons b1 le buffer declare dans le main, b2 le premier buffer de 20 et b3 le troisieme buffer.
+
+b2 et b3 etant cote à cote dans la memoire, si il n'ya pas de \0 a la fin de b2 il va continuer sur b3.
+
+Normalement :
+aaaaaaaaaaaaaa\0bbbbbbbbbbbbbbb\0
+{     b2     } {        b3       }
+
+Si strncpy ne met pas de dans b2 :
+aaaaaaaaaaaaaaaabbbbbbbbbbbbbbb\0
+	{     b2      {        b3       }}
+
+On copie ensuite b2 dans b1, puis on ajoute b3 a la fin de b1.
+
+Normalement aaaaaaaa bbbbbbbbbb
+
+dans notre cas : aaaaaaaaaaaaaaaabbbbbbbbbbbbbbb bbbbbbbbbbbbbbb
+
+On va donc pouvoir ecrire jusque 20 caracteres de la fin de b1.
+
+On remarque ensuite que le eip de retour du main est stocké 54 caracteres apres b1.
+
+On va donc commencer à ecrire 54 caracteres apres b1 :
+
+54 = 20 + 17 + 17
+b1 = b2 + b3 + b3
+
+On trouve donc le payload suivant :
+
+
+gdb /home/user/bonus0/bonus0 -ex "set args < <(python -c \"print 'a' * 20 + '\x0a' + 'b' * 4075 + '\x47' * 15 + '\xf0''\xff''\xbf' + 'g' + '\x0a'\")"
+																																	b1									filler			15 caracetres 				4 caracteres

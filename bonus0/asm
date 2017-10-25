@@ -86,7 +86,7 @@ main:
 
 0x080485aa <+6>:	sub    $0x40,%esp ; 64
 0x080485ad <+9>:	lea    0x16(%esp),%eax ; eax = esp + 16 - char b1[42]
-0x080485b1 <+13>:	mov    %eax,(%esp)
+	0x080485b1 <+13>:	mov    %eax,(%esp)
 0x080485b4 <+16>:	call   0x804851e <pp> ; pp(b1)
 
 0x080485b9 <+21>:	lea    0x16(%esp),%eax
@@ -97,6 +97,12 @@ main:
 0x080485ca <+38>:	leave
 0x080485cb <+39>:	ret
 
-; b1 : 0xbffff716
-; b2 : 0xBFFFF6C8
-; b3 : 0xBFFFF6DC
+; b1 : 0xbfffcfe6
+
+; eip : 0xbfffd01c
+
+offset eip : 54
+
+54 = 42 + 12
+
+20 + 15 + 4 + 15 + 4
