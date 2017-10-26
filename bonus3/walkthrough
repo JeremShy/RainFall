@@ -1,0 +1,5 @@
+On remarque que le programme met un \0 à buffer[atoi(argv[1])] = '\0' puis regarde si ce argv[1] est egale à ce buffer.
+Or, si on envoie une chaine vide à atoi il va renvoyer, et donc la ligne faisant ceci : buffer[atoi(argv[1])] va se resoudre en buffer[0] = '\0'.
+buffer correspondra donc simplement a une chaine vide, et donc a argv[1].
+
+on doit donc simplement faire : ./bonus3 ""
