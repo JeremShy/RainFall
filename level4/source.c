@@ -8,11 +8,10 @@ void p(char *buffer) {
 
 void n() {
 	char buffer[512];
-	int check;
 
 	fgets(buffer, 512, stdin);
 	p(buffer);
-	if (check == 0x01025544) {
+	if (*(uint32_t*)0x8049810 == 0x01025544) {
 		system("/bin/cat /home/user/level5/.pass");
 	}
 }

@@ -17,7 +17,7 @@ chaine : adresse1 + 'aaaa' + adresse2
 Ensuite, nous ecrivons autant de "%08x." qu'il faut pour que le second prochain champ lu par printf soit le début de notre chaine
 (donc la premiere adresse).
 chaine : adresse1 + 'aaaa' + adresse2 + '%08x.' * 10.
-(Nous trouvons le nombre 10 par tatonnement).
+(Nous trouvons le nombre 10 par tatonnement : python -c "print 'AAAA' + '%08x.' * 16" | ./level4, on voit apparaitre 414141 qui correspond a nos A).
 
 À ce moment ci nous avons ecrit : 4 + 4 + 4 + 9 * 10 = 102 caractères. Pour écrire 0x0102(=258), il nous faut donc rajouter
 156 caractères. Nous faisons cela de nouveau à l'aide de la précision d'un %x.

