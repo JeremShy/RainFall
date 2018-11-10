@@ -6,7 +6,6 @@
 void *auth = NULL;
 void *service = NULL;
 
-
 int main()
 {
 	char buffer[130]= {0};

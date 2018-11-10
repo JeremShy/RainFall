@@ -80,7 +80,9 @@ main:
 0x0804865e <+250>:	mov    %edx,%ecx
 0x08048660 <+252>:	sub    %al,%cl
 0x08048662 <+254>:	mov    %ecx,%eax
-0x08048664 <+256>:	movsbl %al,%eax
+0x08048664 <+256>:	movsbl %al,%eaxnt main()
+{
+
 0x08048667 <+259>:	test   %eax,%eax
 0x08048669 <+261>:	jne    0x8048678 <main+276>
 

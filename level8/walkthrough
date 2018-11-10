@@ -1,13 +1,18 @@
 On voit que le programme va lire l'entree et que si elle commence par "auth ", va ecrire dans un pointeur
 
 Plus tard, on voit que si cette adresse + 32 contient autre chose qu'un '\0', le programme spawn un shell.
-On peut donc set flag en tapant :
-flag pouet
+On peut donc set auth en tapant :
+auth pouet
 
-Il existe une autre commande "service" qui va pouvoir nous permettre
+Il existe une autre commande "service" qui va pouvoir nous permettre de malloc autre chose, dans service.
 puis on se sert de service pour mettre des caracteres dans service :
-service aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+service x
+service z
 
+le premier service va se malloc a auth + 16, le second à auth + 32.
 
+Il y aura donc le premier caractere de service a auth + 32, qui sera 'z'. Ca marche !
 
-du coup le mecanisme de check va aller à auth + 32, ce qui correspond a une adresse dans le service, et va lancer le shell
+Il faut taper :
+
+login

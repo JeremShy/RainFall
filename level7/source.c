@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-char g[69];
+char g[69]; // 0x8049960
 char tilde[] = "~~"; //0x8048703
 
  int main(int argc, char **argv) {
@@ -17,7 +17,7 @@ char tilde[] = "~~"; //0x8048703
 	 strcpy(b1[1], argv[1]);
 	 strcpy(b3[1], argv[2]);
 
-	 fgets(g, 68, fopen("/tmp/a", "r"));
+	 fgets(g, 68, fopen("/home/user/level8/.pass", "r"));
 	 puts(tilde);
  }
 

