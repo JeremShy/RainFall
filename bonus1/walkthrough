@@ -2,7 +2,11 @@ On voit que l on peut ecrire atoi(av[1]) * 4 charateres dans un buff de 40
 Cependant atoi(av[1]) ne peut pas depasser 9 soit 36 / 40 charateres
 
 De plus atoi accepte lui des nombres negatifs du style -1 qui est compris comme etant la valeur max d un int
-Ainsi si l on ecrit -2147483637 cela correspond a 11 pour memcpy mais la comparaison se fait entre -2147483637 et 9
+Ainsi si l on ecrit -2147483637 cela correspond a 11 pour memcpy (car memcpy prend un size_t qui est unsigned) mais la comparaison se fait entre -2147483637 et 9
+
+Pour trouver ce nombre, il suffit le complement de deux de 11.
+
+11 * 4 = 44, on peut donc ecrire 4 caraceres apres la fin du buffer.
 
 On peut donc ecrire 40 'a' pour renplire le buff suivis de '\x46''\x4c''\x4f''\x57' pour changer check
 

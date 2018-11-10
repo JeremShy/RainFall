@@ -4,7 +4,7 @@
 
 int language = 0;
 
-void greetuser(char *buff)
+void greetuser(char buff[76])
 {
 	char gb[72];
 

@@ -27,18 +27,18 @@ greetuser:
 0x0804849b <+23>:	jne    0x804850a <greetuser+134>
 ; if language == 0
 	0x0804849d <+25>:	mov    $0x8048710,%edx ; edx = "Hello "
-	0x080484a2 <+30>:	lea    -0x48(%ebp),%eax ; eax = buffer
+	0x080484a2 <+30>:	lea    -0x48(%ebp),%eax ; eax = gb
 	0x080484a5 <+33>:	mov    (%edx),%ecx ; ecx = "Hell"
-	0x080484a7 <+35>:	mov    %ecx,(%eax) ; *buffer = "Hell"
+	0x080484a7 <+35>:	mov    %ecx,(%eax) ; *gb = "Hell"
 	0x080484a9 <+37>:	movzwl 0x4(%edx),%ecx ; ecx = 'o \0\0'
-	0x080484ad <+41>:	mov    %cx,0x4(%eax) ; buffer = "Hello "
+	0x080484ad <+41>:	mov    %cx,0x4(%eax) ; gb = "Hello "
 	0x080484b1 <+45>:	movzbl 0x6(%edx),%edx ; edx = '\0'
-	0x080484b5 <+49>:	mov    %dl,0x6(%eax) ; buffer = "Hello "
+	0x080484b5 <+49>:	mov    %dl,0x6(%eax) ; gb = "Hello "
 	0x080484b8 <+52>:	jmp    0x804850a <greetuser+134>
 
 ; if (language == 1)
 	0x080484ba <+54>:	mov    $0x8048717,%edx ; "Hyvää päivää " ; 18
-	0x080484bf <+59>:	lea    -0x48(%ebp),%eax ; buffer
+	0x080484bf <+59>:	lea    -0x48(%ebp),%eax ; gb
 	0x080484c2 <+62>:	mov    (%edx),%ecx
 	0x080484c4 <+64>:	mov    %ecx,(%eax)
 	0x080484c6 <+66>:	mov    0x4(%edx),%ecx
@@ -50,7 +50,7 @@ greetuser:
 	0x080484d8 <+84>:	movzwl 0x10(%edx),%ecx
 	0x080484dc <+88>:	mov    %cx,0x10(%eax)
 	0x080484e0 <+92>:	movzbl 0x12(%edx),%edx
-	0x080484e4 <+96>:	mov    %dl,0x12(%eax) ; buffer = "Hyvää päivää "
+	0x080484e4 <+96>:	mov    %dl,0x12(%eax) ; gb = "Hyvää päivää "
 	0x080484e7 <+99>:	jmp    0x804850a <greetuser+134>
 
 ; if (language == 2)
@@ -63,7 +63,7 @@ greetuser:
 	0x080484fb <+119>:	mov    0x8(%edx),%ecx
 	0x080484fe <+122>:	mov    %ecx,0x8(%eax)
 	0x08048501 <+125>:	movzwl 0xc(%edx),%edx
-	0x08048505 <+129>:	mov    %dx,0xc(%eax) ; buffer = "Goedemiddag! "
+	0x08048505 <+129>:	mov    %dx,0xc(%eax) ; gb = "Goedemiddag! "
 	0x08048509 <+133>:	nop
 
 0x0804850a <+134>:	lea    0x8(%ebp),%eax ; eax = ebp + 8 = arg

