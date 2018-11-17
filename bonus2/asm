@@ -19,7 +19,7 @@ greetuser:
 0x0804848f <+11>:	cmp    $0x1,%eax
 ; if (language == 1)
 0x08048492 <+14>:	je     0x80484ba <greetuser+54>
-0x08048494 <+16>:	cmp    $0x2,%eax
+x08048494 <+16>:	cmp    $0x2,%eax
 ; else if (language == 2)
 0x08048497 <+19>:	je     0x80484e9 <greetuser+101>
 0x08048499 <+21>:	test   %eax,%eax

